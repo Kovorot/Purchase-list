@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Main {
 
@@ -25,6 +26,11 @@ public class Main {
 
     public static void show() {
         System.out.println("Список покупок:");
-        
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            System.out.println(next);
+        }
+
     }
 }
