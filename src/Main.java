@@ -13,7 +13,7 @@ public class Main {
         while (true) {
             System.out.println("Выберите одну из операций:");
             System.out.println("1. Добавить товар 2. Показать список 3. Удалить товар");
-            int input = Integer.parseInt(scanner.nextLine());
+            int input1 = Integer.parseInt(scanner.nextLine());
         }
     }
 
@@ -25,12 +25,30 @@ public class Main {
     }
 
     public static void show() {
+        showList();
+    }
+
+    public static void delete() {
+        showList();
+        System.out.println("Какую хотите удалить? Введите номер или название");
+        int numberInput;
+        String wordInput;
+        try {
+            numberInput = Integer.parseInt(wordInput = scanner.nextLine());
+        } catch (NumberFormatException e) {
+            
+        }
+
+        }
+
+    public static void showList() {
+        int number = 1;
         System.out.println("Список покупок:");
         Iterator<String> iterator = list.iterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
-            System.out.println(next);
+            System.out.println(number + " " + next);
+            number++;
         }
-
     }
 }
