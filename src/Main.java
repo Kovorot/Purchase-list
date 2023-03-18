@@ -11,8 +11,23 @@ public class Main {
 
         while (true) {
             System.out.println("Выберите одну из операций:");
-            System.out.println("1. Добавить товар 2. Показать список 3. Удалить товар");
+            System.out.println("1. Добавить товар \n2. Показать список \n3. Удалить товар");
             int input = Integer.parseInt(scanner.nextLine());
+
+            switch (input) {
+                case 1:
+                    add();
+                    break;
+                case 2:
+                    show();
+                    break;
+                case 3:
+                    delete();
+                    break;
+                default:
+                    isWrong("number");
+                    break;
+            }
         }
     }
 
@@ -46,23 +61,39 @@ public class Main {
                 System.out.println("Покупка " + wordInput + " удалена, список покупок:");
                 showList();
             } else {
-                System.out.println("Некорректное название товара!");
+                isWrong("word");
             }
         } else {
-            System.out.println("Покупка " + list.get(numberInput) + " удалена, список покупок:");
-            list.remove(numberInput);
-            showList();
+            try {
+                System.out.println("Покупка " + list.get(numberInput - 1) + " удалена, список покупок:");
+                list.remove(numberInput - 1);
+                showList();
+            } catch (IndexOutOfBoundsException e) {
+                isWrong("number");
+            }
         }
     }
 
     public static void showList() {
-        int number = 1;
-        System.out.println("Список покупок:");
-        Iterator<String> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            String next = iterator.next();
-            System.out.println(number + " " + next);
-            number++;
+        if (list.isEmpty()) {
+            System.out.println("В вашей корзине ничего нет");
+        } else {
+            int number = 1;
+            System.out.println("Список покупок:");
+            Iterator<String> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                String next = iterator.next();
+                System.out.println(number + " " + next);
+                number++;
+            }
+        }
+    }
+
+    public static void isWrong(String meaning) {
+        if (meaning.equals("word")) {
+            System.out.println("Введено некорректное название");
+        } else if (meaning.equals("number")) {
+            System.out.println("Введен некорректный номер");
         }
     }
 }
