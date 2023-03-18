@@ -1,17 +1,18 @@
-import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static Scanner scanner = new Scanner(System.in);
     public static List<String> list = new ArrayList<>();
+
     public static void main(String[] args) {
 
         while (true) {
             System.out.println("Выберите одну из операций:");
-            System.out.println("1. Добавить товар \n2. Показать список \n3. Удалить товар");
+            System.out.println("1. Добавить товар \n2. Показать список \n3. Удалить товар \n4. Поиск товара");
             int input = Integer.parseInt(scanner.nextLine());
 
             switch (input) {
@@ -24,6 +25,9 @@ public class Main {
                 case 3:
                     delete();
                     break;
+                case 4:
+                    search();
+                    break;
                 default:
                     isWrong("number");
                     break;
@@ -31,6 +35,7 @@ public class Main {
         }
     }
 
+    //Добавление товара
     public static void add() {
         System.out.println("Какую покупку хотите добавить?");
         String input = scanner.nextLine();
@@ -38,10 +43,12 @@ public class Main {
         System.out.println("Итого в списке покупок: " + list.size());
     }
 
-    public static void show()  {
+    //Показывает список выбранных товаров
+    public static void show() {
         showList();
     }
 
+    //Удаление товара из списка
     public static void delete() {
         boolean isCatched = false;
         int numberInput = 0;
@@ -55,8 +62,8 @@ public class Main {
             isCatched = true;
         }
 
-        if(isCatched) {
-            if(list.contains(wordInput)) {
+        if (isCatched) {
+            if (list.contains(wordInput)) {
                 list.remove(wordInput);
                 System.out.println("Покупка " + wordInput + " удалена, список покупок:");
                 showList();
@@ -74,6 +81,23 @@ public class Main {
         }
     }
 
+    //Поиск товара по названию
+    public static void search() {
+        System.out.println("Введите текст для поиска:");
+        String input = scanner.nextLine();
+        input = input.toLowerCase();
+        int number = 1;
+        System.out.println("Найдено:");
+        for (String title : list) {
+            title = title.toLowerCase();
+            if (title.contains(input)) {
+                System.out.println(number + " " + list.get(number - 1));
+            }
+            number++;
+        }
+    }
+
+    //Показывает список товаров (дополнительный метод для избежания дублирования кода)
     public static void showList() {
         if (list.isEmpty()) {
             System.out.println("В вашей корзине ничего нет");
@@ -89,6 +113,7 @@ public class Main {
         }
     }
 
+    //Сообщение о вводе некорректного значения
     public static void isWrong(String meaning) {
         if (meaning.equals("word")) {
             System.out.println("Введено некорректное название");
@@ -96,4 +121,5 @@ public class Main {
             System.out.println("Введен некорректный номер");
         }
     }
+
 }
