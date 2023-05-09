@@ -1,3 +1,5 @@
+package org.example;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,10 +16,13 @@ public class Main {
             System.out.println("Выберите одну из операций:");
             System.out.println("1. Добавить товар \n2. Показать список \n3. Удалить товар \n4. Поиск товара");
             int input = Integer.parseInt(scanner.nextLine());
+            String value;
 
             switch (input) {
                 case 1:
-                    add();
+                    System.out.println("Какую покупку хотите добавить?");
+                    value = scanner.nextLine();
+                    add(value);
                     break;
                 case 2:
                     show();
@@ -26,7 +31,9 @@ public class Main {
                     delete();
                     break;
                 case 4:
-                    search();
+                    System.out.println("Введите текст для поиска:");
+                    value = scanner.nextLine();
+                    search(value);
                     break;
                 default:
                     isWrong("number");
@@ -36,16 +43,15 @@ public class Main {
     }
 
     //Добавление товара
-    public static void add() {
-        System.out.println("Какую покупку хотите добавить?");
-        String input = scanner.nextLine();
+    public static String add(String input) {
         list.add(input);
         System.out.println("Итого в списке покупок: " + list.size());
+        return input;
     }
 
     //Показывает список выбранных товаров
     public static void show() {
-        showList();
+        showList(list);
     }
 
     //Удаление товара из списка
@@ -53,7 +59,7 @@ public class Main {
         boolean isCatched = false;
         int numberInput = 0;
         String wordInput = null;
-        showList();
+        showList(list);
 
         System.out.println("Какую хотите удалить? Введите номер или название");
         try {
@@ -66,7 +72,7 @@ public class Main {
             if (list.contains(wordInput)) {
                 list.remove(wordInput);
                 System.out.println("Покупка " + wordInput + " удалена, список покупок:");
-                showList();
+                showList(list);
             } else {
                 isWrong("word");
             }
@@ -74,7 +80,7 @@ public class Main {
             try {
                 System.out.println("Покупка " + list.get(numberInput - 1) + " удалена, список покупок:");
                 list.remove(numberInput - 1);
-                showList();
+                showList(list);
             } catch (IndexOutOfBoundsException e) {
                 isWrong("number");
             }
@@ -82,9 +88,7 @@ public class Main {
     }
 
     //Поиск товара по названию
-    public static void search() {
-        System.out.println("Введите текст для поиска:");
-        String input = scanner.nextLine();
+    public static String search(String input) {
         input = input.toLowerCase();
         int number = 1;
         System.out.println("Найдено:");
@@ -95,22 +99,27 @@ public class Main {
             }
             number++;
         }
+        return input;
     }
 
     //Показывает список товаров (дополнительный метод для избежания дублирования кода)
-    public static void showList() {
+    public static boolean showList(List list) {
+        boolean isEmpty;
         if (list.isEmpty()) {
             System.out.println("В вашей корзине ничего нет");
+            isEmpty = true;
         } else {
             int number = 1;
             System.out.println("Список покупок:");
             Iterator<String> iterator = list.iterator();
+            isEmpty = false;
             while (iterator.hasNext()) {
                 String next = iterator.next();
                 System.out.println(number + " " + next);
                 number++;
             }
         }
+        return isEmpty;
     }
 
     //Сообщение о вводе некорректного значения
